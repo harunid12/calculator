@@ -9,7 +9,7 @@ const updateScreen = (number) => {
 let prevNumber = "";
 let calculationOperator = "";
 let currentNumber = "0";
-let calculationPersen = "";
+
 
 const inputNumber = (number) => {
   if (currentNumber === "0") {
@@ -29,6 +29,7 @@ numbers.forEach((number) => {
   });
 });
 
+
 // input operator
 const inputOperator = (operator) => {
   if (calculationOperator === "") {
@@ -45,6 +46,7 @@ operators.forEach((operator) => {
     inputOperator(event.target.value);
   });
 });
+
 
 // calculate
 const equalSign = document.querySelector(".equal-sign");
@@ -69,6 +71,12 @@ const calculate = () => {
     case "/":
       result = parseFloat(prevNumber) / parseFloat(currentNumber);
       break;
+    case "%":
+      result = parseFloat(prevNumber) / 100;
+      break;
+    case "*%":
+      result = parseFloat(prevNumber) * (parseFloat(currentNumber) / 100);
+      break;
     default:
       break;
   }
@@ -76,6 +84,7 @@ const calculate = () => {
   currentNumber = result;
   calculationOperator = "";
 };
+
 
 // Clear Screen
 const clearAll = () => {
@@ -91,6 +100,7 @@ clearBtn.addEventListener("click", () => {
   updateScreen(currentNumber);
 });
 
+
 // decimal
 const inputDecimal = (dot) => {
   currentNumber += dot;
@@ -104,15 +114,16 @@ decimal.addEventListener("click", (event) => {
 });
 
 
-// percentage
-const inputPercentage = (persen) => {
-    if (calculationPersen === ""){
+// input percentage
+const inputPercentage = () => {
+    if (calculationOperator === ""){
         prevNumber = currentNumber;
     }
-    calculationPersen = persen;
-    currentNumber = "";
+    calculationOperator = "%";
+    calculationOperator = "*%";
 
 };
+
 const percentage = document.querySelector(".percentage");
 
 percentage.addEventListener("click", (event) => {
